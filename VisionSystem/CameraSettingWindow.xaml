@@ -1,0 +1,131 @@
+﻿<mah:MetroWindow x:Class="VisionSystem.CameraSettingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VisionSystem"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:hanseroDisplay="clr-namespace:HanseroDisplay;assembly=HanseroDisplay"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:hvisionPro="clr-namespace:HVisionPro;assembly=HVisionPro"
+        mc:Ignorable="d"
+        Title="카메라 설정" Height="720" Width="1280" Icon="logo.ico">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <!--
+        <GroupBox Header="디스플레이" Margin="5" mah:HeaderedControlHelper.HeaderFontSize="16">
+            <hanseroDisplay:HDisplay>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:CallMethodAction TargetObject="{Binding}" MethodName="CameraSettingDisplay_Loaded"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </hanseroDisplay:HDisplay>
+        </GroupBox>
+        -->
+        <hvisionPro:HCognexDisplay HeaderName="디스플레이" Margin="5">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:CallMethodAction TargetObject="{Binding}" MethodName="CameraSettingDisplay_Loaded"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </hvisionPro:HCognexDisplay>
+        <Grid Grid.Column="1" Width="300">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="차종 선택" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="차종 번호" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    <ComboBox Grid.Column="1" Margin="5" FontSize="16" ItemsSource="{Binding CameraSettingCarKindList}" SelectedItem="{Binding SelectedCameraSettingCarKind}">
+                        
+                    </ComboBox>
+                    <TextBlock Grid.Row="1" Text="선택 차종" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SelectedCameraSettingCarKindText}" FontSize="16" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5" IsReadOnly="False"/>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="1" Header="카메라 선택" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="선택 카메라" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+                    <ComboBox Grid.Column="1" FontSize="16" Margin="5" ItemsSource="{Binding SelectedCameraSettingCarKindInfo.Shots}" SelectedItem="{Binding SelectedCameraSettingCamera}">
+                        
+                    </ComboBox>
+                </Grid>
+            </GroupBox>
+            <GroupBox Grid.Row="2" Header="카메라 설정" mah:HeaderedControlHelper.HeaderFontSize="16" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Text="Exposure" FontSize="16" Margin="5" VerticalAlignment="Center"/>
+                    <mah:NumericUpDown Grid.Row="0" Grid.Column="1" Margin="5" FontSize="16" Value="{Binding SelectedCameraSettingCamera.Exposure}"/>
+                    <Slider Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Minimum="0" Maximum="1000000" Value="{Binding SelectedCameraSettingCamera.Exposure}" Interval="1">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="ValueChanged">
+                                <i:CallMethodAction TargetObject="{Binding}" MethodName="CameraSettingExposureSlide_ValueChanged"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Slider>
+                    <Button Grid.Row="2" Grid.ColumnSpan="2" Margin="5">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="Click">
+                                <i:CallMethodAction TargetObject="{Binding}" MethodName="CameraSettingSaveButton_Click"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <TextBlock Text="저장" FontSize="16"/>
+                    </Button>
+                </Grid>
+            </GroupBox>
+            <Grid Grid.Row="3" Margin="0,10,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Button Margin="5" Height="50">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Click">
+                            <i:CallMethodAction TargetObject="{Binding}" MethodName="CameraSettingOneShotButton_Click"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TextBlock Text="단일 촬영" FontSize="16"/>
+                </Button>
+                <Button Margin="5" Grid.Row="3" Height="50">
+                    <TextBlock Text="이미지 저장" FontSize="16"/>
+                </Button>
+            </Grid>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>
